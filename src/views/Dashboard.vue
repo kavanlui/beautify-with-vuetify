@@ -10,10 +10,22 @@
           :items="employees"
           :items-per-page="5"
           class="elevation-1"
-          @click:row="action"
+          @click:row="toggleSnackbar"
         ></v-data-table>
       </v-card-text>
-  </v-card>
+    </v-card>
+    <v-snackbar
+      v-model="snackbar"
+    >
+      You've selected {{ selectedEmployee }}
+      <v-btn
+        color="pink"
+        text
+        @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -23,13 +35,16 @@ import employeeData from '../data/employees.json'
 export default {
   name: 'Dashboard',
   methods: {
-    action(ev) {
-      console.log(this.currentItems)
-
+    toggleSnackbar(event) {
+      debugger
+      this.snackbar = true
+      this.selectedEmployee = event.name
     }
   },
   data() {
     return {
+      selectedEmployee: '',
+      snackbar: true,
       headers: [
         {
           text: 'ID',
